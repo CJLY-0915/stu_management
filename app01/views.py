@@ -300,7 +300,7 @@ def edit_teacher(request):
 
 def get_all_class(request):
     import time
-    time.sleep(1)
+    time.sleep(0.3)
     obj = sqlheper.SqlHelper()
     class_list = obj.get_list('select id,title from class',[])
     obj.close()
