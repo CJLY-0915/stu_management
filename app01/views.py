@@ -4,6 +4,13 @@ import pymysql
 import json
 
 def classes(request):
+    #去请求的cookie中找凭证
+    # tk = request.COOKIES.get('ticket')
+    tk = request.get_signed_cookie('ticket',salt='jjjjjj')
+    print(tk)
+    if not tk:
+        return redirect('/login/')
+
     #创建连接
     conn = pymysql.connect(host='127.0.0.1', port=3306, user='cjly', passwd='cjly0915', db='django')
     #创建游标
@@ -328,6 +335,20 @@ def modal_add_teacher(request):
 
 def layout(request):
     return render(request,'layout.html');
+
+def login(request):
+
+    if request.method == 'GET':
+        return render(request,'login.html')
+    else:
+        user = request.POST.get('username')
+        pwd = request.POST.get('password')
+        if user == 'alex' and pwd == '123':
+            obj = redirect('/classes/')
+            obj.set_signed_cookie('ticket',"123123",salt='jjjjjj')
+            return obj
+        else:
+            return render(request,'login.html')
 
 
 
