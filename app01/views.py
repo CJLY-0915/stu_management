@@ -5,8 +5,8 @@ import json
 
 def classes(request):
     #去请求的cookie中找凭证
-    # tk = request.COOKIES.get('ticket')
-    tk = request.get_signed_cookie('ticket',salt='jjjjjj')
+    # tk = request.COOKIES.get('ticket')   #未签名cookie
+    tk = request.get_signed_cookie('ticket',salt='jjjjjj')   #签名cookie
     print(tk)
     if not tk:
         return redirect('/login/')
